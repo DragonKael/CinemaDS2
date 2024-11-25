@@ -1,0 +1,23 @@
+name: cinemagrupo7
+description: "A new Flutter project."
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.1
+
+dependencies:
+  dio: ^5.7.0
+  flutter:
+    sdk: flutter
+  flutter_dotenv: ^5.2.1
+  flutter_riverpod: ^2.6.1
+  go_router: ^14.6.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
