@@ -1,4 +1,4 @@
-import 'package:cinemagrupo7/presentation/providers/movies/movies_providers.dart';
+import 'package:cinemagrupo7/presentation/providers/providers.dart';
 import 'package:cinemagrupo7/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,7 +10,10 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: _HomeView());
+    return const Scaffold(
+      body: _HomeView(),
+      bottomNavigationBar: CustomBottonNavigation(),
+    );
   }
 }
 
@@ -32,13 +35,47 @@ class _HomeViewState extends ConsumerState<_HomeView> {
   @override
   Widget build(BuildContext context) {
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
+    final slideShowMovies = ref.watch(MoviesSliedshowProvider);
 
-    return Column(
-      children: [
-        const CustomAppbar(),
-        MoviesSliedshow(movies: nowPlayingMovies),
-        
-      ],
-    );
+    return CustomScrollView(slivers: [
+      const SliverAppBar(
+        floating: true,
+        flexibleSpace: FlexibleSpaceBar(
+          title: CustomAppbar(),
+        ),
+      ),
+      SliverList(
+          delegate: SliverChildBuilderDelegate((context, index) {
+        return Column(
+          children: [
+            MoviesSliedshow(movies: slideShowMovies),
+            MovieHorizontalListview(
+                movies: nowPlayingMovies,
+                title: 'En cines',
+                subtitle: 'lunes 20',
+                loadNextPage: () =>
+                    ref.read(nowPlayingMoviesProvider.notifier).loadNextPage()),
+            MovieHorizontalListview(
+                movies: nowPlayingMovies,
+                title: 'Proximamente',
+                subtitle: 'Enero',
+                loadNextPage: () =>
+                    ref.read(nowPlayingMoviesProvider.notifier).loadNextPage()),
+            MovieHorizontalListview(
+                movies: nowPlayingMovies,
+                title: 'Faritos',
+                subtitle: '',
+                loadNextPage: () =>
+                    ref.read(nowPlayingMoviesProvider.notifier).loadNextPage()),
+            MovieHorizontalListview(
+                movies: nowPlayingMovies,
+                title: 'Populares',
+                subtitle: 'siempre',
+                loadNextPage: () =>
+                    ref.read(nowPlayingMoviesProvider.notifier).loadNextPage())
+          ],
+        );
+      }, childCount: 1))
+    ]);
   }
 }
