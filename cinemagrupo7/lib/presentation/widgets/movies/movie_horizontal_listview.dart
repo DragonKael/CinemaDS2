@@ -92,13 +92,14 @@ class _Slide extends StatelessWidget {
                 fit: BoxFit.cover,
                 width: 150,
                 loadingBuilder: (context, child, loadingProgress) {
+                  if(loadingProgress != null){
                   return const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Center(
                         child: CircularProgressIndicator(
                       strokeWidth: 2,
                     )),
-                  );
+                  );}
                   // ignore: dead_code
                   return FadeIn(child: child);
                 },
