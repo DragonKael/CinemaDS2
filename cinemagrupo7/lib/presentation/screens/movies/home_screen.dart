@@ -31,6 +31,8 @@ class _HomeViewState extends ConsumerState<_HomeView> {
 
     ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
     ref.read(popularMoviesProvider.notifier).loadNextPage();
+    ref.read(upcomingMoviesProvider.notifier).loadNextPage();
+    ref.read(topratedMoviesProvider.notifier).loadNextPage();
   }
 
   @override
@@ -38,6 +40,8 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
     final slideShowMovies = ref.watch(MoviesSliedshowProvider);
     final popularMovies = ref.watch(popularMoviesProvider);
+    final upcomingMovies = ref.watch(upcomingMoviesProvider);
+    final topratedMovies = ref.watch(topratedMoviesProvider);
 
     return CustomScrollView(slivers: [
       const SliverAppBar(
@@ -58,29 +62,23 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                 loadNextPage: () =>
                     ref.read(nowPlayingMoviesProvider.notifier).loadNextPage()),
             MovieHorizontalListview(
-                movies: nowPlayingMovies,
+                movies: upcomingMovies,
                 title: 'Proximamente',
                 subtitle: 'Enero',
                 loadNextPage: () =>
-                    ref.read(nowPlayingMoviesProvider.notifier).loadNextPage()),
+                    ref.read(upcomingMoviesProvider.notifier).loadNextPage()),
             MovieHorizontalListview(
-                movies: nowPlayingMovies,
-                title: 'Faritos',
+                movies: topratedMovies,
+                title: 'Mejor puntuadas',
                 subtitle: '',
                 loadNextPage: () =>
-                    ref.read(nowPlayingMoviesProvider.notifier).loadNextPage()),
+                    ref.read(topratedMoviesProvider.notifier).loadNextPage()),
             MovieHorizontalListview(
                 movies: popularMovies,
                 title: 'Populares',
                 subtitle: 'siempre',
                 loadNextPage: () =>
                     ref.read(popularMoviesProvider.notifier).loadNextPage()),
-            MovieHorizontalListview(
-                movies: popularMovies,
-                title: 'Populares',
-                subtitle: 'siempre',
-                loadNextPage: () =>
-                    ref.read(popularMoviesProvider.notifier).loadNextPage())
           ],
         );
       }, childCount: 1))
