@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:animate_do/animate_do.dart';
+import 'package:cinemagrupo7/config/Helpers/HumanFormarts.dart';
 import 'package:cinemagrupo7/domain/entities/movie.dart';
 import 'package:flutter/material.dart';
 
@@ -88,6 +89,22 @@ class _MovieItem extends StatelessWidget {
                 (movie.overview.length > 100)
                     ? Text('${movie.overview.substring(0, 100)}...')
                     : Text(movie.overview),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.star_half_rounded,
+                      color: Colors.yellow.shade800,
+                    ),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      HumanFormats.number(movie.voteAverage, 1),
+                      style: TextStyles.bodyMedium!
+                          .copyWith(color: Colors.yellow.shade900),
+                    )
+                  ],
+                )
               ],
             ),
           )
