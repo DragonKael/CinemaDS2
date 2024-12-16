@@ -8,6 +8,7 @@ final initialLoadingProvider = Provider<bool>((ref) {
   final s3 = ref.watch(popularMoviesProvider).isEmpty;
   final s4 = ref.watch(upcomingMoviesProvider).isEmpty;
   final s5 = ref.watch(topratedMoviesProvider).isEmpty;
-  if (s1 || s2 || s3 || s4 || s5) return true;
+  final s6 = ref.watch(anotherMoviesProvider).isEmpty;
+  if (s1 || s2 || s3 || s4 || s5 || s6) return true;
   return false;
 });
