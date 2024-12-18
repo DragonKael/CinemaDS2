@@ -1,3 +1,5 @@
+import 'package:go_router/go_router.dart';
+import 'package:cinemagrupo7/domain/entities/movie.dart';
 import 'package:cinemagrupo7/presentation/delegates/search_movie_delegate.dart';
 import 'package:cinemagrupo7/presentation/providers/providers.dart';
 import 'package:flutter/material.dart';
@@ -31,12 +33,20 @@ class CustomAppbar extends ConsumerWidget {
             const Spacer(),
             IconButton(
                 onPressed: () {
-                  final movieRepository = ref.read(movieRepositoryProvider);
-                  showSearch(
-                      context: context,
-                      delegate: SearchMovieDelegate(
-                        searchMovies: movieRepository.searchMovies,
-                      ));
+                  final searchedMovies = ref.read(searchedMoviesProvider);
+                  final searchQuery = ref.read(searchQueryProvider);
+                  showSearch<Movie?>(
+                          query: searchQuery,
+                          context: context,
+                          delegate: SearchMovieDelegate(
+                              initialMovies: searchedMovies,
+                              searchMovies: ref
+                                  .read(searchedMoviesProvider.notifier)
+                                  .searchMoviesByQuery))
+                      .then((movie) {
+                    if (movie == null) return;
+                    context.push('/movie/${movie.id}');
+                  });
                 },
                 icon: const Icon(Icons.search))
           ],
